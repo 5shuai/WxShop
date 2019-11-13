@@ -24,5 +24,6 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('media/<path:path>', serve, {'document_root': MEDIA_ROOT}),
     # path('ueditor/', include('DjangoUeditor.urls'))
-    path('xdmin/',xadmin.site.urls)
+    path('',xadmin.site.urls),
+    path('xadmin/',xadmin.site.urls)
 ]

@@ -74,6 +74,12 @@ class Goods(models.Model):
     is_hot = models.BooleanField(default=False, verbose_name="是否热销")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
+    class Meta:
+        verbose_name = '商品'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
 
 class GoodsImage(models.Model):
     """
