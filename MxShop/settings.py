@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'user_operation.apps.UserOperationConfig',
     'DjangoUeditor',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'rest_framework',
+    'django_filters'
 
 ]
 
@@ -92,8 +94,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vue_shop',
-        'USER': 'vue_shop',
-        'PASSWORD': 'vue_shop',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         "OPTIONS": {"init_command": "SET default_storage_engine=INNODB;"}
@@ -135,3 +137,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
