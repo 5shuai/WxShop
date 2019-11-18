@@ -35,6 +35,6 @@ class GoodsListView(mixins.ListModelMixin, viewsets.GenericViewSet):
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CategoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class CategoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = GoodsCategory.objects.filter(category_type=1)
     serializer_class = CategorySerializer
