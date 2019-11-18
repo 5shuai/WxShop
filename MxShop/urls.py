@@ -17,18 +17,24 @@ from django.urls import include
 from django.urls import path
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
-
+from rest_framework.routers import DefaultRouter
 import xadmin
 from MxShop.settings import MEDIA_ROOT
 from goods.views_base import GoodsListView
-from goods.views import GoodsListView
+from goods.views import GoodsListView, CategoryViewSet
+
+router = DefaultRouter()
+router.register(r'goods', GoodsListView, base_name="goods")
+router.register(r'categories', CategoryViewSet, base_name="categories")
+goods_list = GoodsListView.as_view({
+    'get': 'list'
+})
 
 urlpatterns = [
     path('media/<path:path>', serve, {'document_root': MEDIA_ROOT}),
     path('ueditor/', include('DjangoUeditor.urls')),
-    path('', xadmin.site.urls),
     path('xadmin/', xadmin.site.urls),
-    path('goods/', GoodsListView.as_view(), name="goods-list"),
-    path(r'^api-auth/', include('rest_framework.urls')),
-    path('docs/', include_docs_urls(title="生鲜"))
+    path('api-auth/', include('rest_framework.urls')),
+    path('docs/', include_docs_urls(title="生鲜")),
+    path('', include(router.urls))
 ]

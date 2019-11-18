@@ -2,9 +2,9 @@
 
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
-from rest_framework import viewsets
-from .models import Goods
-from .serializers import GoodsSerializer
+from rest_framework import mixins, viewsets
+from .models import Goods, GoodsCategory
+from .serializers import GoodsSerializer, CategorySerializer
 
 
 class GoodsPagination(PageNumberPagination):
@@ -14,11 +14,11 @@ class GoodsPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class GoodsListView(generics.ListAPIView):
+class GoodsListView(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     List all goods.
     """
-    queryset = Goods.objects.all()
+    queryset = Goods.objects.get_queryset().order_by('id')
     serializer_class = GoodsSerializer
     pagination_class = GoodsPagination
 
@@ -33,3 +33,8 @@ class GoodsListView(generics.ListAPIView):
     #         serializer.save()
     #         return Response(serializer.data, status=status.HTTP_201_CREATED)
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CategoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = GoodsCategory.objects.filter(category_type=1)
+    serializer_class = CategorySerializer
