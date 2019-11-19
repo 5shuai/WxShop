@@ -1,6 +1,5 @@
 # Create your views here.
 
-from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import mixins, viewsets, filters
 from .models import Goods, GoodsCategory
