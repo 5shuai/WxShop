@@ -81,6 +81,7 @@ class Goods(models.Model):
     def __str__(self):
         return self.name
 
+
 class GoodsImage(models.Model):
     """
     商品轮播图
@@ -101,7 +102,7 @@ class Banner(models.Model):
     """
     轮播的商品
     """
-    goods = models.ForeignKey(Goods, verbose_name="商品", on_delete=models.CASCADE)
+    goods = models.ForeignKey(Goods, verbose_name="商品",default='', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='banner', verbose_name="轮播图片")
     index = models.IntegerField(default=0, verbose_name="轮播顺序")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")

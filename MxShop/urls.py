@@ -22,6 +22,7 @@ import xadmin
 from MxShop.settings import MEDIA_ROOT
 from goods.views_base import GoodsListView
 from goods.views import GoodsListView, CategoryViewSet
+from rest_framework.authtoken import views
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListView, base_name="goods")
@@ -36,5 +37,6 @@ urlpatterns = [
     path('xadmin/', xadmin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('docs/', include_docs_urls(title="生鲜")),
+    path('api-token-auth/', views.obtain_auth_token),
     path('', include(router.urls))
 ]
