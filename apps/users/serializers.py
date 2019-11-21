@@ -28,6 +28,9 @@ class SmsSerializer(serializers.Serializer):
         one_minutes_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
         if VerifyCode.objects.filter(add_time__gt=one_minutes_ago, mobile=mobile):
             raise serializers.ValidationError("距离上次发送未超过1分钟")
+
+        if VerifyCode.objects.filter(mobile=mobile, add_time__day=datetime.now().date().day).count() >= 10:
+            raise serializers.ValidationError("验证码发送超过每日限制")
         return mobile
 
 
