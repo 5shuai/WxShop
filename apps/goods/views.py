@@ -15,7 +15,7 @@ class GoodsPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class GoodsListView(mixins.ListModelMixin, viewsets.GenericViewSet):
+class GoodsListView(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     List all goods.
     """

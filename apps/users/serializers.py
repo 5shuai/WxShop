@@ -40,9 +40,18 @@ class UserRegSerializer(serializers.ModelSerializer):
                                      "max_length": "验证码格式错误",
                                      "min_length": "验证码格式错误"
                                  })
-    username = serializers.CharField(required=True, allow_blank=False,
+    username = serializers.CharField(required=True, allow_blank=False, min_length=11, max_length=11,
+                                     error_messages={
+                                         "max_length": "手机号格式错误",
+                                         "min_length": "手机号格式错误"
+                                     },
                                      validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")])
-    password = serializers.CharField(style={'input_type': 'password'}, label="密码", write_only=True)
+    password = serializers.CharField(style={'input_type': 'password'}, label="密码", write_only=True, min_length=6,
+                                     max_length=20,
+                                     error_messages={
+                                         "max_length": "密码格式错误",
+                                         "min_length": "密码格式错误"
+                                     })
 
     def validate_code(self, code):
         verify_records = VerifyCode.objects.filter(mobile=self.initial_data["username"]).order_by("-add_time")
@@ -56,7 +65,7 @@ class UserRegSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("验证码过期")
 
         else:
-            raise serializers.ValidationError("验证码过期")
+            raise serializers.ValidationError("请先获取验证码")
 
     def validate(self, attrs):
         attrs["mobile"] = attrs["username"]
