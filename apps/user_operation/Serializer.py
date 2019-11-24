@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from goods.models import Goods
-from .models import UserFav, UserLeavingMessage
+from .models import UserFav, UserLeavingMessage, UserAddress
 from goods.serializers import GoodsSerializer
 
 
@@ -40,3 +40,33 @@ class LeavingMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserLeavingMessage
         fields = ("user", "message_type", "subject", "message", "file", "id", "add_time")
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    add_time = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H:%M:%S")
+    province = serializers.CharField(required=True, error_messages={
+        "required": "该字段不能为空"
+    })
+    city = serializers.CharField(required=True, error_messages={
+        "required": "该字段不能为空"
+    })
+    district = serializers.CharField(required=True, error_messages={
+        "required": "该字段不能为空"
+    })
+    address = serializers.CharField(required=True, error_messages={
+        "required": "该字段不能为空"
+    })
+    signer_name = serializers.CharField(required=True, error_messages={
+        "required": "该字段不能为空"
+    })
+    signer_mobile = serializers.CharField(required=True, error_messages={
+        "required": "该字段不能为空"
+    })
+
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
+    class Meta:
+        model = UserAddress
+        fields = "__all__"

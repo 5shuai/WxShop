@@ -24,7 +24,8 @@ from goods.views import GoodsListView, CategoryViewSet
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 
-from user_operation.views import UserFavViewSet, LeavingMessageViewSet
+from trade.views import ShoppingCartViewSet
+from user_operation.views import UserFavViewSet, LeavingMessageViewSet, AddressViewSet
 from users.views import SmsCodeViewSet, UserViewSet
 
 router = DefaultRouter()
@@ -34,6 +35,9 @@ router.register(r'code', SmsCodeViewSet, base_name="code")
 router.register(r'users', UserViewSet, base_name="users")
 router.register(r'userfavs', UserFavViewSet, base_name="userfavs")
 router.register(r'messages', LeavingMessageViewSet, base_name="messages")
+router.register(r'address', AddressViewSet, base_name="address")
+router.register(r'shopcarts', ShoppingCartViewSet, base_name="shopcarts")
+
 goods_list = GoodsListView.as_view({
     'get': 'list'
 })
