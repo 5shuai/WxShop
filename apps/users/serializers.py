@@ -43,13 +43,14 @@ class UserRegSerializer(serializers.ModelSerializer):
                                      "max_length": "验证码格式错误",
                                      "min_length": "验证码格式错误"
                                  })
-    username = serializers.CharField(required=True, allow_blank=False, min_length=11, max_length=11,
+    username = serializers.CharField(required=True, allow_blank=False, min_length=11, max_length=11, help_text="注册的手机号",
                                      error_messages={
                                          "max_length": "手机号格式错误",
                                          "min_length": "手机号格式错误"
                                      },
                                      validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")])
     password = serializers.CharField(style={'input_type': 'password'}, label="密码", write_only=True, min_length=6,
+                                     help_text="密码",
                                      max_length=20,
                                      error_messages={
                                          "max_length": "密码格式错误",
@@ -78,3 +79,9 @@ class UserRegSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "code", "mobile", "password")
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("name", "birthday", "mobile", "gender", "email")

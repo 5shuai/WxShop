@@ -4,8 +4,8 @@ from .models import Goods
 
 
 class GoodsFilter(django_filters.rest_framework.FilterSet):
-    pricemin = django_filters.NumberFilter(field_name='shop_price', lookup_expr='gte')
-    pricemax = django_filters.NumberFilter(field_name='shop_price', lookup_expr='lte')
+    pricemin = django_filters.NumberFilter(field_name='shop_price', lookup_expr='gte',help_text="最低价格")
+    pricemax = django_filters.NumberFilter(field_name='shop_price', lookup_expr='lte',help_text="最高价格")
     top_category = django_filters.NumberFilter(method='top_category_filter')
 
     def top_category_filter(self, queryset, name, value):
@@ -14,4 +14,4 @@ class GoodsFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = Goods
-        fields = ['pricemin', 'pricemax']
+        fields = ['pricemin', 'pricemax', 'is_hot', 'is_new']
