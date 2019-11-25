@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import include
 from django.urls import path
 from django.views.static import serve
+from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 import xadmin
@@ -24,8 +25,8 @@ from goods.views import GoodsListView, CategoryViewSet
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 
-from trade.views import ShoppingCartViewSet
-from user_operation.views import UserFavViewSet, LeavingMessageViewSet, AddressViewSet
+from trade.views import ShoppingCartViewSet, OrderViewSet
+from user_operation.views import UserFavViewSet, LeavingMessageViewSet, AddressViewSet, AlipayView
 from users.views import SmsCodeViewSet, UserViewSet
 
 router = DefaultRouter()
@@ -37,6 +38,7 @@ router.register(r'userfavs', UserFavViewSet, base_name="userfavs")
 router.register(r'messages', LeavingMessageViewSet, base_name="messages")
 router.register(r'address', AddressViewSet, base_name="address")
 router.register(r'shopcarts', ShoppingCartViewSet, base_name="shopcarts")
+router.register(r'orders', OrderViewSet, base_name="orders")
 
 goods_list = GoodsListView.as_view({
     'get': 'list'
@@ -52,5 +54,7 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
     # jwt的认证模式
     path('login/', obtain_jwt_token),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('alipay/return/', AlipayView.as_view(), name="alipay"),
+    path('index/', TemplateView.as_view(template_name="index.html")),
 ]
