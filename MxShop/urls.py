@@ -21,7 +21,7 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 import xadmin
 from MxShop.settings import MEDIA_ROOT
-from goods.views import GoodsListView, CategoryViewSet
+from goods.views import GoodsListView, CategoryViewSet, BannerViewSet, HotSearchsViewSet, IndexCategoryViewset
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 
@@ -39,6 +39,9 @@ router.register(r'messages', LeavingMessageViewSet, base_name="messages")
 router.register(r'address', AddressViewSet, base_name="address")
 router.register(r'shopcarts', ShoppingCartViewSet, base_name="shopcarts")
 router.register(r'orders', OrderViewSet, base_name="orders")
+router.register(r'banners', BannerViewSet, base_name="banners")
+router.register(r'hotsearchs', HotSearchsViewSet, base_name="hotsearchs")
+router.register(r'indexgoods', IndexCategoryViewset, base_name="indexgoods")
 
 goods_list = GoodsListView.as_view({
     'get': 'list'
