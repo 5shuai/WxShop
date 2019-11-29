@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# pip install pycryptodome
+# pip3 install pycryptodome
+from MxShop.settings import appid
+
 __author__ = 'bobby'
 
 import json
@@ -129,7 +131,7 @@ if __name__ == "__main__":
     ali_sign = query.pop("sign")[0]
 
     alipay = AliPay(
-        appid="",
+        appid=appid,
         app_notify_url="http://127.0.0.1:8000/alipay/return/",
         app_private_key_path="../trade/keys/private_2048.txt",
         alipay_public_key_path="../trade/keys/alipay_key_2048.txt",  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,

@@ -25,8 +25,8 @@ from goods.views import GoodsListView, CategoryViewSet, BannerViewSet, HotSearch
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 
-from trade.views import ShoppingCartViewSet, OrderViewSet
-from user_operation.views import UserFavViewSet, LeavingMessageViewSet, AddressViewSet, AlipayView
+from trade.views import ShoppingCartViewSet, OrderViewSet, AlipayView
+from user_operation.views import UserFavViewSet, LeavingMessageViewSet, AddressViewSet
 from users.views import SmsCodeViewSet, UserViewSet
 
 router = DefaultRouter()
@@ -59,5 +59,4 @@ urlpatterns = [
     path('login/', obtain_jwt_token),
     path('', include(router.urls)),
     path('alipay/return/', AlipayView.as_view(), name="alipay"),
-    path('index/', TemplateView.as_view(template_name="index.html")),
 ]

@@ -3,7 +3,7 @@ from random import Random
 
 from rest_framework import serializers
 
-from MxShop.settings import private_key_path, ali_pub_key_path
+from MxShop.settings import private_key_path, ali_pub_key_path, appid, return_url
 from goods.serializers import GoodsSerializer
 from trade.models import ShoppingCart, OrderInfo, OrderGoods
 from goods.models import Goods
@@ -16,7 +16,7 @@ class ShoppingCartSerializer(serializers.Serializer):
     )
     nums = serializers.IntegerField(required=True, min_value=1, error_messages={
         "min_value": "商品数量不能小于1",
-        "required": "数量不能为空弄"
+        "required": "数量不能为空"
     })
     goods = serializers.PrimaryKeyRelatedField(required=True, queryset=Goods.objects.all(), error_messages={
         "required": "商品不能为空"
@@ -63,12 +63,12 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_alipay_url(self, obj):
         alipay = AliPay(
-            appid="",
-            app_notify_url="http://127.0.0.1:8000/alipay/return/",
+            appid=appid,
+            app_notify_url=return_url,
             app_private_key_path=private_key_path,
             alipay_public_key_path=ali_pub_key_path,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
             debug=True,  # 默认False,
-            return_url="http://127.0.0.1:8000/alipay/return/"
+            return_url=return_url
         )
 
         url = alipay.direct_pay(
@@ -100,6 +100,12 @@ class OrderSerializer(serializers.ModelSerializer):
 class OrderGoodsSerializer(serializers.ModelSerializer):
     goods = GoodsSerializer(many=False)
 
+    def create(self, validated_data):
+        pass
+
+    def validate_goods(self):
+        pass
+
     class Meta:
         model = OrderGoods
         fields = "__all__"
@@ -111,12 +117,12 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 
     def get_alipay_url(self, obj):
         alipay = AliPay(
-            appid="",
-            app_notify_url="http://127.0.0.1:8000/alipay/return/",
+            appid=appid,
+            app_notify_url=return_url,
             app_private_key_path=private_key_path,
             alipay_public_key_path=ali_pub_key_path,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
             debug=True,  # 默认False,
-            return_url="http://127.0.0.1:8000/alipay/return/"
+            return_url=return_url
         )
 
         url = alipay.direct_pay(
