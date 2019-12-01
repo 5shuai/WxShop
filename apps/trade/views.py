@@ -1,24 +1,21 @@
-import time
 from datetime import datetime
-from random import Random
 
-from django.shortcuts import render, redirect
-
-# Create your views here.
-
+from django.shortcuts import redirect
 from rest_framework import viewsets, status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework import mixins
 
 from MxShop.settings import private_key_path, ali_pub_key_path, appid, return_url, redirect_url
 from trade.models import ShoppingCart, OrderInfo, OrderGoods
 from trade.serializer import ShoppingCartSerializer, ShopCartDetailSerializer, OrderSerializer, OrderDetailSerializer
 from utils.alipay import AliPay
 from utils.permissions import IsOwnerOrReadOnly
+
+
+# Create your views here.
 
 
 class ShoppingCartViewSet(viewsets.ModelViewSet):
@@ -170,6 +167,7 @@ class AlipayView(APIView):
                 for order_good in order_goods:
                     goods = order_good.goods
                     goods.sold_num += order_good.goods_num
+                    goods.goods_num -= order_good.goods_num
                     goods.save()
 
                 existed_order.pay_status = trade_status
