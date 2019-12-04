@@ -37,17 +37,17 @@ class OrderInfo(models.Model):
     )
 
     user = models.ForeignKey(User, verbose_name="用户", default='', on_delete=models.CASCADE)
-    order_sn = models.CharField(max_length=30, null=True, blank=True, unique=True, verbose_name="订单号")
+    order_sn = models.CharField(max_length=30, null=True, blank=True, unique=True, verbose_name="订单号",)
     trade_no = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name="交易号")
     pay_status = models.CharField(choices=ORDER_STATUS, default="paying", max_length=30, verbose_name="订单状态")
-    post_script = models.CharField(max_length=200,null=True,blank=True, verbose_name="订单留言")
-    order_mount = models.FloatField(default=0.0, verbose_name="订单金额")
+    post_script = models.CharField(max_length=200, verbose_name="订单留言",help_text="订单留言")
+    order_mount = models.FloatField(verbose_name="订单金额",help_text="订单金额")
     pay_time = models.DateTimeField(null=True, blank=True, verbose_name="支付时间")
 
     # 用户信息
-    address = models.CharField(max_length=100, default="", verbose_name="收货地址")
-    signer_name = models.CharField(max_length=20, default="", verbose_name="签收人")
-    singer_mobile = models.CharField(max_length=11, verbose_name="联系电话")
+    address = models.CharField(max_length=100, verbose_name="收货地址",help_text="收货地址")
+    signer_name = models.CharField(max_length=20, verbose_name="签收人",help_text="签收人")
+    singer_mobile = models.CharField(max_length=11, verbose_name="联系电话",help_text="联系电话")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 

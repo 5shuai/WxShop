@@ -177,4 +177,4 @@ ali_pub_key_path = os.path.join(BASE_DIR, 'apps/trade/keys/alipay_key_2048.txt')
 appid = "2016101500694258"
 
 return_url = "http://admin.5istudy.online/alipay/return/"
-redirect_url = "http://localhost:7788/#/app/home/index"
+redirect_url = "http://shop.5istudy.online/#/app/home/index"

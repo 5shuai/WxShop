@@ -44,22 +44,22 @@ class LeavingMessageSerializer(serializers.ModelSerializer):
 
 class AddressSerializer(serializers.ModelSerializer):
     add_time = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H:%M:%S")
-    province = serializers.CharField(required=True, error_messages={
+    province = serializers.CharField(required=True,help_text="省", error_messages={
         "required": "该字段不能为空"
     })
-    city = serializers.CharField(required=True, error_messages={
+    city = serializers.CharField(required=True, help_text="市",error_messages={
         "required": "该字段不能为空"
     })
-    district = serializers.CharField(required=True, error_messages={
+    district = serializers.CharField(required=True, help_text="区",error_messages={
         "required": "该字段不能为空"
     })
-    address = serializers.CharField(required=True, error_messages={
+    address = serializers.CharField(required=True, help_text="收货地址", error_messages={
         "required": "该字段不能为空"
     })
-    signer_name = serializers.CharField(required=True, error_messages={
+    signer_name = serializers.CharField(required=True,help_text="收货人姓名", error_messages={
         "required": "该字段不能为空"
     })
-    signer_mobile = serializers.CharField(required=True, error_messages={
+    signer_mobile = serializers.CharField(required=True, help_text="手机号",error_messages={
         "required": "该字段不能为空"
     })
 
